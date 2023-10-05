@@ -4,12 +4,12 @@ if __name__ == "__main__":
     count = len(sys.argv) - 1
     if(count != 3):
         print("Usage: {} <a> <operator> <b>".format(sys.argv[0]))
-        sys.exit(1)
+        exit(1)
     operators = ['+', '-', '*', '/']
     operator = sys.argv[2]
     if operator not in operators:
         print("Unknown operator. Available operators: +, -, * and /")
-        sys.exit(1)
+        exit(1)
     a = int(sys.argv[1])
     b = int(sys.argv[3])
     result = 0
