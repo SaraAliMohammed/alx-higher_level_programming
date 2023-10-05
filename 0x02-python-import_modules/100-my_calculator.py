@@ -3,7 +3,7 @@ if __name__ == "__main__":
     import sys
     count = len(sys.argv) - 1
     if(count != 3):
-        print("Usage: {} <a> <operator> <b>".format(sys.argv[0]))
+        print("Usage: ./100-my_calculator.py <a> <operator> <b>")
         exit(1)
     operators = ['+', '-', '*', '/']
     operator = sys.argv[2]
