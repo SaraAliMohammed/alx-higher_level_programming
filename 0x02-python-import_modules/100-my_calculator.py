@@ -4,7 +4,7 @@ if __name__ == "__main__":
     import sys
     count = len(sys.argv) - 1
     if(count != 3):
-        print("Usage: ./{sys.argv[0]} <a> <operator> <b>")
+        print("Usage: ./{} <a> <operator> <b>".format(sys.argv[0]))
         sys.exit(1)
     operators = ['+', '-', '*', '/']
     if sys.argv[2] not in operators:
@@ -13,6 +13,7 @@ if __name__ == "__main__":
     a = int(sys.argv[1])
     b = int(sys.argv[3])
     operator = sys.argv[2]
+    result = 0
     if operator == '+':
         result = calculator_1.add(a, b)
     elif operator == '-':
@@ -21,4 +22,4 @@ if __name__ == "__main__":
         result = calculator_1.mul(a, b)
     else:
         result = calculator_1.div(a, b)
-    print("{} {} {} = {}".format(a, sys.argv[2], b, result))
+    print("{} {} {} = {}".format(a, operator, b, result))
