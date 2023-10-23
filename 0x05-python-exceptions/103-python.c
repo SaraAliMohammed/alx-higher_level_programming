@@ -1,106 +1,81 @@
 #include <Python.h>
-
-void print_python_list(PyObject *p);
-void print_python_bytes(PyObject *p);
-void print_python_float(PyObject *p);
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <object.h>
+#include <listobject.h>
+#include <bytesobject.h>
+#include <floatobject.h>
+#include <string.h>
 /**
- * print_python_list - Prints the basic info about Python lists.
- * @p: A PyObject list object.
- */
-void print_python_list(PyObject *p)
-{
-	Py_ssize_t size, alloc, index = 0;
-	const char *type;
-	PyListObject *list_obj = (PyListObject *)p;
-	PyVarObject *var_obj = (PyVarObject *)p;
-
-	size = var_obj->ob_size;
-	alloc = list_obj->allocated;
-
-	fflush(stdout);
-
-	printf("[*] Python list info\n");
-	if (strcmp(p->ob_type->tp_name, "list") != 0)
-	{
-		printf("  [ERROR] Invalid List Object\n");
-		return;
-	}
-
-	printf("[*] Size of the Python List = %ld\n", size);
-	printf("[*] Allocated = %ld\n", alloc);
-
-	while (index < size)
-	{
-		type = list_obj->ob_item[i]->ob_type->tp_name;
-		printf("Element %ld: %s\n", i, type);
-		if (strcmp(type, "bytes") == 0)
-			print_python_bytes(list_obj->ob_item[i]);
-		else if (strcmp(type, "float") == 0)
-			print_python_float(list_obj->ob_item[i]);
-		index++;
-	}
-}
-
-/**
- * print_python_bytes - Prints the basic info about Python byte objects.
- * @p: A PyObject byte object.
+ * print_python_bytes - print python things
+ * @p: pointer to PyObject p
  */
 void print_python_bytes(PyObject *p)
 {
-	Py_ssize_t size, index = 0;
-	PyBytesObject *bytes_obj = (PyBytesObject *)p;
+	size_t b, i;
+	char *str;
 
-	fflush(stdout);
-
+	setbuf(stdout, NULL);
 	printf("[.] bytes object info\n");
-	if (strcmp(p->ob_type->tp_name, "bytes") != 0)
+	if (PyBytes_Check(p) == 0)
 	{
 		printf("  [ERROR] Invalid Bytes Object\n");
 		return;
 	}
-
-	printf("  size: %ld\n", ((PyVarObject *)p)->ob_size);
-	printf("  trying string: %s\n", bytes->ob_sval);
-
-	if (((PyVarObject *)p)->ob_size >= 10)
-		size = 10;
-	else
-		size = ((PyVarObject *)p)->ob_size + 1;
-
-	printf("  first %ld bytes: ", size);
-	while (index < size)
-	{
-		printf("%02hhx", bytes->ob_sval[index]);
-		if (index == (size - 1))
-			printf("\n");
-		else
-			printf(" ");
-		index++;
-	}
+	str = ((PyBytesObject *)(p))->ob_sval, b = PyBytes_Size(p);
+	printf("  size: %ld\n  trying string: %s\n", b, str);
+	b >= 10 ? b = 10 : b++;
+	printf("  first %ld bytes: ", b);
+	for (i = 0; i < b - 1; i++)
+		printf("%02hhx ", str[i]);
+	printf("%02hhx\n", str[i]);
 }
-
 /**
- * print_python_float - Prints the basic info about Python float objects.
- * @p: A PyObject float object.
+ * print_python_float - print python things
+ * @p: pointer to PyObject p
  */
 void print_python_float(PyObject *p)
 {
-	char *buffer = NULL;
+	char *str;
+	double f;
 
-	PyFloatObject *float_obj = (PyFloatObject *)p;
-
-	fflush(stdout);
-
+	setbuf(stdout, NULL);
 	printf("[.] float object info\n");
-	if (strcmp(p->ob_type->tp_name, "float") != 0)
+	if (PyFloat_Check(p) == 0)
 	{
 		printf("  [ERROR] Invalid Float Object\n");
 		return;
 	}
+	f = ((PyFloatObject *)(p))->ob_fval;
+	str = PyOS_double_to_string(f, 'r', 0, Py_DTSF_ADD_DOT_0, NULL);
+	printf("  value: %s\n", str);
+}
+/**
+ * print_python_list - print python things
+ * @p: pointer to PyObject p
+ */
+void print_python_list(PyObject *p)
+{
+	size_t a, size, i;
+	const char *t;
+	PyListObject *list;
 
-	buffer = PyOS_double_to_string(float_obj->ob_fval, 'r', 0,
-			Py_DTSF_ADD_DOT_0, NULL);
-	printf("  value: %s\n", buffer);
-	PyMem_Free(buffer);
+	setbuf(stdout, NULL);
+	printf("[*] Python list info\n");
+	if (PyList_Check(p) == 0)
+	{
+		printf("  [ERROR] Invalid List Object\n");
+		return;
+	}
+	list = (PyListObject *)p;
+	size = PyList_GET_SIZE(p);
+	a = list->allocated;
+	printf("[*] Size of the Python List = %ld\n[*] Allocated = %li\n", size, a);
+	for (i = 0; i < size; i++)
+	{
+		t = (list->ob_item[i])->ob_type->tp_name;
+		printf("Element %li: %s\n", i, t);
+		!strcmp(t, "bytes") ? print_python_bytes(list->ob_item[i]) : (void)t;
+		!strcmp(t, "float") ? print_python_float(list->ob_item[i]) : (void)t;
+	}
 }
