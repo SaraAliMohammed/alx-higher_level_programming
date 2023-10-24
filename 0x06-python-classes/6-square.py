@@ -21,7 +21,7 @@ class Square:
 
     @property
     def size(self):
-        return self.__size
+        return (self.__size)
 
     @size.setter
     def size(self, value):
@@ -33,11 +33,11 @@ class Square:
 
     @property
     def position(self):
-        return self.__position
+        return (self.__position)
 
     @position.setter
     def position(self, value):
-        if (not isinstance(position, tuple) or
+        if (not isinstance(value, tuple) or
                 len(value) != 2 or
                 not all(isinstance(num, int) for num in value) or
                 not all(num >= 0 for num in value)):
