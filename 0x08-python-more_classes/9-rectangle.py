@@ -9,6 +9,7 @@ class Rectangle:
         width (int): width of the rectangle.
         height (int): height of the rectangle.
     """
+
     number_of_instances = 0
     print_symbol = "#"
 
@@ -18,9 +19,9 @@ class Rectangle:
             width (int): width of rectangle. Defaults to 0.
             height (int): height of rectangle. Defaults to 0.
         """
-        self.height = height
-        self.width = width
         type(self).number_of_instances += 1
+        self.width = width
+        self.height = height
 
     @property
     def width(self):
@@ -56,7 +57,7 @@ class Rectangle:
 
     @height.setter
     def height(self, value):
-        """Property setter for height of rectangle.
+        """Property setter for height of recyangle.
         Args:
             value (int): height of the rectangle.
         Raises:
@@ -92,7 +93,7 @@ class Rectangle:
         """Returns a new rectangle instance with width == height == size.
         Args:
             cls: used to access class attributes.
-            size (int): size of rectangle. Defaults to 0.
+            size (int, optional): size of rectangle. Defaults to 0.
         Returns:
             Square: the new rectangle with equal values of height and width .
         """
@@ -100,50 +101,53 @@ class Rectangle:
 
     def __str__(self):
         """Prints the rectangle with the character # .
+
         Returns:
-            str: the rectangle, if width or height
-            is equal to 0, return an empty string
+            str: the rectangle
         """
         rectangle = []
+
         if self.__width == 0 or self.__height == 0:
             return ""
+
         for i in range(self.__height):
             for j in range(self.__width):
                 rectangle.append(str(self.print_symbol))
             rectangle.append("\n")
 
-        # remove the last new line
+        # remove blank line
         rectangle.pop()
+
         return "".join(rectangle)
 
     def __repr__(self):
-        """Returns a string representation of the rectangle
-        to be able to recreate a new instance by using eval().
+        """Returns a string representation of the rectangle.
         Returns:
             str: the rectangle representation.
         """
         return "Rectangle({:d}, {:d})".format(self.__width, self.__height)
 
     def __del__(self):
-        """Print the message Bye rectangle...
-        when an instance of Rectangle is deleted
+        """Deletes an instance of a class
         """
-        print("{:s}".format("Bye rectangle..."))
         type(self).number_of_instances -= 1
+        print("{:s}".format("Bye rectangle..."))
 
     @staticmethod
     def bigger_or_equal(rect_1, rect_2):
         """Computes the area of two rectangles and compares them.
+
         Args:
             rect_1 (Rectangle): first rectangle.
             rect_2 (Rectangle): second rectangle.
 
         Returns:
-            The biggest rectangle based on the area, rect_1 if
+            Rectangle: the rectangle with the biggest area else rect_1 if
             areas are equal
         """
         if not isinstance(rect_1, Rectangle):
             raise TypeError("rect_1 must be an instance of Rectangle")
+
         if not isinstance(rect_2, Rectangle):
             raise TypeError("rect_2 must be an instance of Rectangle")
 
@@ -152,4 +156,5 @@ class Rectangle:
 
         if area_1 >= area_2:
             return rect_1
+
         return rect_2
