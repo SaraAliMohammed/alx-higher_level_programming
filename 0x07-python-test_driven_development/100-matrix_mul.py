@@ -82,4 +82,3 @@ def matrix_mul(m_a, m_b):
 if __name__ == "__main__":
     import doctest
     doctest.testfile("tests/100-matrix_mul.txt")
-    matrix_mul([[5, 6, 10], [7, 8]], [[5, 6], [7, 8]])
