@@ -104,3 +104,15 @@ Test missing 2 args:
     Traceback (most recent call last):
     ...
     TypeError: matrix_mul() missing 2 required positional arguments: 'm_a' and 'm_b'
+
+Test only integers or floats:
+   >>> matrix_mul([[5, 6], [7, 8]], [[5, "6"], [7, 8]])
+   Traceback (most recent call last):
+   ...
+   TypeError: m_b should contain only integers or floats
+
+Test each row same length:
+   >>> matrix_mul([[5, 6, 10], [7, 8]], [[5, 6], [7, 8]])
+   Traceback (most recent call last):
+   ...
+   TypeError: each row of m_a must should be of the same size
