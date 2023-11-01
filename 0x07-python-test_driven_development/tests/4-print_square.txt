@@ -49,7 +49,8 @@ Test errors
 
     >>> print_square(-3)
     Traceback (most recent call last):
-    ValueError: size must be a non-negative integer
+    ...
+    ValueError: size must be >= 0
 
     >>> print_square(-9.2)
     Traceback (most recent call last):
