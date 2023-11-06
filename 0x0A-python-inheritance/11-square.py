@@ -3,7 +3,7 @@
 Rectangle = __import__('9-rectangle').Rectangle
 
 
-class Square(BaseGeometry):
+class Square(Rectangle):
     """
     Square Class
     """
@@ -18,4 +18,5 @@ class Square(BaseGeometry):
         return (self.__size ** 2)
 
     def __str__(self):
+        """String representation of Square"""
         return ("[Square] " + str(self.__size) + "/" + str(self.__size))
