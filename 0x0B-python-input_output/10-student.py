@@ -19,7 +19,7 @@ class Student:
         except Exception:
             return self.__dict__
         att_dict = dict()
-        for k, v in self.__dict__:
+        for k, v in self.__dict__.items():
             if k in attrs:
                 att_dict[k] = v
         return att_dict
