@@ -75,7 +75,11 @@ class Rectangle(Base):
             prints in stdout the Rectangle instance
             with the character #
         """
+        for vr in range(self.__y):
+            print()
         for row in range(self.__height):
+            for hr in range(self.__x):
+                print(" ", end='')
             for col in range(self.__width):
                 print("#", end="")
             print()
@@ -84,3 +88,23 @@ class Rectangle(Base):
         """String representation of a rectangle"""
         return (f"[Rectangle] ({self.id}) {self.__x}/{self.__y} - "
                 f"{self.__width}/{self.__height}")
+
+    def updateByArgs(self, id=None, width=None, height=None, x=None, y=None):
+        """Update attributes from args/kwargs"""
+        if id:
+            self.id = id
+        if width:
+            self.__width = width
+        if height:
+            self.__height = height
+        if x:
+            self.__x = x
+        if y:
+            self.__y = y
+
+    def update(self, *args, **kwargs):
+        """Assigns a key/value argument to each attribute"""
+        if (args):
+            self.updateByArgs(*args)
+        elif (kwargs):
+            self.updateByArgs(**kwargs)
