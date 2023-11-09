@@ -94,13 +94,13 @@ class Rectangle(Base):
         if id:
             self.id = id
         if width:
-            self.__width = width
+            self.width = width
         if height:
-            self.__height = height
+            self.height = height
         if x:
-            self.__x = x
+            self.x = x
         if y:
-            self.__y = y
+            self.y = y
 
     def update(self, *args, **kwargs):
         """Assigns a key/value argument to each attribute"""
