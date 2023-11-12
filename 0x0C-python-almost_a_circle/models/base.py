@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is a Base Module"""
 import json
+import csv
 
 
 class Base:
@@ -88,3 +89,47 @@ class Base:
         with open(file_name, "r", encoding="utf-8") as file:
             return [cls.create(**dic) for dic in
                     cls.from_json_string(file.read())]
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Serializes and deserializes in CSV"""
+        from models.rectangle import Rectangle
+        from models.square import Square
+        file_name = "{}.csv".format(cls.__name__)
+        if list_objs is not None:
+            if cls is Rectangle:
+                list_objs = [[obj.id, obj.width, obj.height, obj.x, obj.y]
+                             for obj in list_objs]
+            elif cls is Square:
+                list_objs = [[obj.id, obj.size, obj.x, obj.y]
+                             for obj in list_objs]
+            else:
+                list_objs = []
+        with open(file_name, "w", newline='',
+                  encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerows(list_objs)
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Dseserializes in CSV"""
+        from models.rectangle import Rectangle
+        from models.square import Square
+        from os import path
+        file_name = "{}.csv".format(cls.__name__)
+        data = []
+        if not path.isfile(file_name):
+            return []
+        with open(file_name, 'r', newline='',
+                  encoding='utf-8') as file:
+            reader = csv.reader(file)
+            for line in reader:
+                line = [int(n) for n in line]
+                if cls is Rectangle:
+                    d = {"id": line[0], "width": line[1], "height": line[2],
+                         "x": line[3], "y": line[4]}
+                else:
+                    d = {"id": line[0], "size": line[1],
+                         "x": line[2], "y": line[3]}
+                data.append(cls.create(**d))
+        return data
