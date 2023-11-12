@@ -58,3 +58,22 @@ class Base:
             list_objs = [obj.to_dictionary() for obj in list_objs]
         with open(file_name, "w", encoding="utf-8") as file:
             file.write(cls.to_json_string(list_objs))
+
+    @classmethod
+    def create(cls, **dictionary):
+        """Returns an instance with all
+        attributes already set
+        Args:
+            cls: The class name.
+            dictionary: A double pointer to a dictionary.
+        """
+        from models.rectangle import Rectangle
+        from models.square import Square
+        if cls is Rectangle:
+            instance = Rectangle(1, 1)
+        elif cls is Square:
+            instance = Square(1)
+        else:
+            instance = None
+        instance.update(**dictionary)
+        return instance
