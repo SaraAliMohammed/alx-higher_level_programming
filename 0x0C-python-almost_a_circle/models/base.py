@@ -133,3 +133,35 @@ class Base:
                          "x": line[2], "y": line[3]}
                 data.append(cls.create(**d))
         return data
+
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        """opens a window and draws all the
+        Rectangles and Squares.
+        Args:
+            list_rectangles: A list of Rectangles.
+            list_squares: A list of Squares.
+        """
+        import turtle
+        import time
+        from random import randrange
+        turtle.Screen().colormode(255)
+        for sh in list_rectangles + list_squares:
+            tr = turtle.Turtle()
+            tr.color((randrange(255), randrange(255), randrange(255)))
+            tr.pensize(1)
+            tr.penup()
+            tr.pendown()
+            tr.setpos((sh.x + tr.pos()[0], sh.y - tr.pos()[1]))
+            tr.pensize(10)
+            tr.forward(sh.width)
+            tr.left(90)
+            tr.forward(sh.height)
+            tr.left(90)
+            tr.forward(sh.width)
+            tr.left(90)
+            tr.forward(sh.height)
+            tr.left(90)
+            tr.end_fill()
+
+        time.sleep(5)
