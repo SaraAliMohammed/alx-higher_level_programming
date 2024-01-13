@@ -1,14 +1,14 @@
 #!/usr/bin/python3
+"""
+    Module that performs creates a City class based off of Base.
+"""
 from sqlalchemy import Column, Integer, String, text, ForeignKey
 from relationship_state import Base
-"""
-    Module that performs creates a States class based off of Base.
-"""
 
 
 class City(Base):
     """
-        The ``City`` class which inherits from ``Base`` class.
+        The City class which inherits from the Base class.
     """
     __tablename__ = 'cities'
     id = Column(Integer, primary_key=True)

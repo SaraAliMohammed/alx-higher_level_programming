@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""adds the State object “California”
-with the City “San Francisco”
+"""adds the State object 'California'
+with the City 'San Francisco'
 to the database hbtn_0e_100_usa"""
 
 if __name__ == "__main__":
