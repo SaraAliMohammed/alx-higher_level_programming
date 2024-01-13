@@ -2,6 +2,7 @@
 """
     Module that performs MySQL query through MySQLAlchemy.
 """
+import sys
 from relationship_state import Base, State
 from relationship_city import City
 from sqlalchemy.orm import sessionmaker, relationship
@@ -23,5 +24,4 @@ if __name__ == "__main__":
     for a_city in session.query(City).order_by(City.id):
         print("{}: {} -> {}".format(a_city.id, a_city.name,
               a_city.state.name))
-
     session.close()
