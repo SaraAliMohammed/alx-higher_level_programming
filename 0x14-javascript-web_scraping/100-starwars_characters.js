@@ -9,8 +9,9 @@ request(url, function (er, response, body) {
     console.log(er);
   } else if (response.statusCode === 200) {
     const movie = JSON.parse(body);
-    for (const character of movie.characters) {
-      request(character, function (err, body2) {
+    const characters = movie.characters;
+    for (const character of characters) {
+      request(character, function (err, res, body2) {
         if (err) {
           console.log(err);
         }
